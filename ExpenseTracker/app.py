@@ -1,12 +1,12 @@
 from fastapi import FastAPI, HTTPException
-from pydantic import Basemodel
+from pydantic import BaseModel
 from typing import List, Optional
 from datetime import date
 from collections import defaultdict
 
 app = FastAPI(title="Expense Tracker")
 
-class ExpenseCreate(Basemodel):
+class ExpenseCreate(BaseModel):
     amount:float
     category:str
     description: Optional[str] = None
