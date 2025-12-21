@@ -1,4 +1,4 @@
-from fastapi import FastAPI , HTTPException
+from fastapi import FastAPI, HTTPException
 from pydantic import BaseModel
 from typing import List, Optional
 from datetime import date
@@ -27,3 +27,9 @@ class BorrowRecord(BaseModel):
     borrow_date:date
     return_date:Optional[date]=None
 
+books: List[Book] = []
+members: List[Member] = []
+records: List[BorrowRecord] = []
+next_book_id = 1
+next_member_id = 1
+next_record_id = 1
