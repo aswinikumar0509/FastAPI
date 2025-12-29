@@ -18,3 +18,32 @@ def get_current_user(x_user:Optional[str]=Header(None))->User:
         raise HTTPException(status_code=401,details="X-User header required")
     return users[x_user]
 
+class ProductCreate(BaseModel):
+    name: str
+    price: float
+    stock: int
+
+class Product(ProductCreate):
+    id: int
+
+class CartItem(BaseModel):
+    product_id: int
+    quantity: int
+
+class OrderItem(BaseModel):
+    product_id: int
+    quantity: int
+    price: float
+
+class Order(BaseModel):
+    id: int
+    user: str
+    items: List[OrderItem]
+    total: float
+    status: str = "created"
+
+products: List[Product] = []
+next_product_id = 1
+carts: dict[str, List[CartItem]] = {}
+orders: List[Order] = []
+next_order_id = 1
