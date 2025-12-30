@@ -47,3 +47,14 @@ next_product_id = 1
 carts: dict[str, List[CartItem]] = {}
 orders: List[Order] = []
 next_order_id = 1
+
+# products
+@app.post("/products", response_model=Product)
+def add_product(data: ProductCreate, user: User = Depends(get_current_user)):
+    if not user.is_admin:
+        raise HTTPException(status_code=403, detail="Admins only")
+    global next_product_id
+    p = Product(id=next_product_id, **data.dict())
+    next_product_id += 1
+    products.append(p)
+    return p
