@@ -58,3 +58,11 @@ def add_product(data: ProductCreate, user: User = Depends(get_current_user)):
     next_product_id += 1
     products.append(p)
     return p
+
+
+@app.get("/products",response_model=List[Product])
+def list_products(q:Optional[str]=None):
+    if not q:
+        return products
+    q=q.lower()
+    return [p for p in products if q in p.name.lower()]
